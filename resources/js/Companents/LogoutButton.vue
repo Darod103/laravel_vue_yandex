@@ -1,5 +1,5 @@
 <script setup>
-
+import exit from '@/assets/exit.png'
 import {Link} from "@inertiajs/vue3";
 import {route} from "ziggy-js";
 
@@ -11,9 +11,9 @@ import {route} from "ziggy-js";
         method="post"
         as="button"
         type="button"
-        class="px-3 py-2 rounded bg-gray-200 hover:bg-gray-300 text-sm"
+        class="px-3 py-2 rounded text-sm cursor-pointer"
     >
-        Выйти
+      <img :src="exit" alt="logout">
     </Link>
 </template>
 
