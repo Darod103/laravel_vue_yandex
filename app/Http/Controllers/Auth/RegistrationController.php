@@ -27,7 +27,7 @@ final class RegistrationController extends Controller
         event(new Registered($user));
         Auth::login($user);
         $request->session()->regenerate();
-        return Redirect::route('dashboard');
+        return Redirect::route('dashboard.index');
 
     }
 }

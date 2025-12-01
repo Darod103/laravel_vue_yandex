@@ -5,6 +5,7 @@ use App\Http\Controllers\Auth\LoginController;
 use App\Http\Controllers\Auth\LogoutController;
 use App\Http\Controllers\Auth\RegistrationController;
 use App\Http\Controllers\Dashboard\DashboardController;
+use App\Http\Controllers\Reviews\ReviewsController;
 use Illuminate\Support\Facades\Route;
 
 Route::middleware('guest')->group(function () {
@@ -18,5 +19,6 @@ Route::middleware('auth')->group(function () {
     Route::get('/', fn()=> Inertia('Dashboard/Index') )->name('home');
     Route::resource('/dashboard',DashboardController::class);
     Route::post('/logout', LogoutController::class)->name('logout');
-    //TODO Добавить через меил востановления пороля и верификацию аккаунта
+    Route::get('/reviews/settings',[ReviewsController::class,'settings'])->name('reviews.settings');
+    Route::post('/reviews',[ReviewsController::class,'store'])->name('reviews.store');
 });

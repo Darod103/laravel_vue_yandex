@@ -35,4 +35,9 @@ return [
         ],
     ],
 
+    'parser' => [
+        'base_url' => env('PARSER_URL', 'http://fastapi-parser:8000'),
+        'endpoint' => env('PARSER_PARSE_PATH', '/parse'),
+    ],
+
 ];
