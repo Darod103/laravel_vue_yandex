@@ -1,6 +1,9 @@
 <script setup>
+import yandex_logo from "@/assets/yandex_logo.svg"
 import AppLayout from "@/Layouts/AppLayout.vue";
 import {computed} from "vue";
+import PlaceRatingSummary from "@/Companents/PlaceRatingSummary.vue";
+import Review from "@/Companents/Review.vue";
 
 defineOptions({
     layout: AppLayout
@@ -26,30 +29,38 @@ const hasPlace = computed(() => !!props.place);
             Место ещё не подключено.
         </div>
 
-        <div v-else class="space-y-2">
-            <h2 class="text-xl font-semibold">{{ props.place.name || 'Без названия' }}</h2>
-            <div class="text-sm text-gray-700">
-                <div>URL: {{ props.place.url }}</div>
-                <div>Статус: {{ props.place.status }}</div>
-                <div>Рейтинг: {{ props.place.rating ?? '—' }} ({{ props.place.total_reviews ?? 0 }} отзывов)</div>
-                <div>Последний парс: {{ props.place.parsed_at ?? '—' }}</div>
+        <div v-else class="flex flex-col gap-6 lg:flex-row lg:items-start">
+            <div class="flex-1 space-y-4">
+                <div class="inline-flex items-center gap-2 bg-white rounded-lg shadow-md shadow-slate-200 px-2 py-1">
+                    <img
+                        :src="yandex_logo"
+                        alt="Yandex Maps"
+                        class="w-4 h-4"
+                    >
+                    <a
+                        :href="props.place.url"
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        class="text-xs hover:underline"
+                    >
+                        Яндекс Карты
+                    </a>
+                </div>
+                <div class="flex flex-col gap-5">
+                    <Review
+                        v-for="review in props.reviews"
+                        :key="review.id"
+                        :review="review"
+                        :place="props.place"
+                    />
+                </div>
             </div>
 
-            <div class="mt-4">
-                <h3 class="text-lg font-medium mb-2">Отзывы</h3>
-                <div v-if="props.reviews.length === 0" class="text-sm text-gray-600">
-                    Отзывов пока нет.
-                </div>
-                <ul v-else class="space-y-3">
-                    <li v-for="review in props.reviews" :key="review.id" class="rounded-lg border border-gray-200 p-3">
-                        <div class="flex items-center justify-between">
-                            <div class="font-semibold">{{ review.author }}</div>
-                            <div class="text-sm text-gray-500">{{ review.rating ?? '—' }}</div>
-                        </div>
-                        <div class="text-xs text-gray-500">{{ review.raw_date }}</div>
-                        <div class="mt-2 text-sm">{{ review.text }}</div>
-                    </li>
-                </ul>
+            <div class="w-full lg:w-auto lg:sticky lg:top-4">
+                <PlaceRatingSummary
+                    :totalReviews="place.total_reviews"
+                    :rating="Number(props.place.rating)"
+                />
             </div>
         </div>
     </div>

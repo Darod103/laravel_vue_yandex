@@ -63,29 +63,37 @@ function submit() {
 </script>
 
 <template>
-<div>
-
-    <div v-if="loading" class="mb-2 flex items-center gap-2 text-sm text-gray-600">
-        <span class="h-4 w-4 animate-spin rounded-full border-2 border-blue-500 border-t-transparent"></span>
-        Обрабатываем…
-    </div>
-        <h2 class="font-main text-base font-medium mb-4">Подключить Яндекс</h2>
-        <div class="mb-2">
-            <span class=" helper-text font-main text-xs font-semibold">Укажите ссылку на Яндекс, пример </span>
-            <a class="link-yandex font-main text-xs font-light underline"
-               href="https://yandex.ru/maps/org/samoye_populyarnoye_kafe/1010501395/reviews/">https://yandex.ru/maps/org/samoye_populyarnoye_kafe/1010501395/reviews/</a>
+    <div class="space-y-4">
+        <div v-if="loading" class="mb-2 flex items-center gap-2 text-sm text-gray-600">
+            <span class="h-4 w-4 animate-spin rounded-full border-2 border-blue-500 border-t-transparent"></span>
+            Обрабатываем…
         </div>
-        <div class="flex flex-col gap-4">
-            <input @input="form.clearErrors('url')" v-model="form.url" type="text"
-                   class="yandex-input font-main text-sm" placeholder="Введите ссылку">
-            <div v-if="form.errors.url" class="text-red-500 text-xs mt-1">
+        <h2 class="font-main text-base font-medium">Подключить Яндекс</h2>
+        <div class="space-y-1">
+            <span class="helper-text font-main text-xs font-semibold">Укажите ссылку на Яндекс, пример </span>
+            <a
+                class="link-yandex font-main text-xs font-light underline break-all"
+                href="https://yandex.ru/maps/org/samoye_populyarnoye_kafe/1010501395/reviews/"
+            >
+                https://yandex.ru/maps/org/samoye_populyarnoye_kafe/1010501395/reviews/
+            </a>
+        </div>
+        <div class="flex flex-col gap-3 sm:gap-4">
+            <input
+                @input="form.clearErrors('url')"
+                v-model="form.url"
+                type="text"
+                class="yandex-input font-main text-sm w-full max-w-xl"
+                placeholder="Введите ссылку"
+            >
+            <div v-if="form.errors.url" class="text-red-500 text-xs">
                 {{ form.errors.url }}
             </div>
             <button
                 @click="submit"
                 :disabled="loading || form.processing"
                 :class="[
-                    'w-32 h-7 rounded-md flex items-center justify-center transition',
+                    'w-full sm:w-32 h-10 sm:h-8 rounded-md flex items-center justify-center transition text-sm sm:text-base',
                     loading || form.processing
                         ? 'bg-blue-300 text-white opacity-60 cursor-not-allowed'
                         : 'bg-blue-500 text-white hover:bg-blue-400 cursor-pointer'
@@ -107,11 +115,10 @@ function submit() {
 }
 
 .yandex-input {
-    width: 480px;
-    height: 24px;
+    min-height: 40px;
     border-radius: 6px;
     background: #fff;
     border: 1px solid #D1D5DB;
-    padding: 4px 8px;
+    padding: 8px 10px;
 }
 </style>

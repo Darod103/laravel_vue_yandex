@@ -40,6 +40,7 @@ class ReviewsService
         $reviews = $place
             ? $place->reviews()
                 ->select('id', 'author', 'rating', 'text', 'raw_date', 'date_iso')
+                ->orderByDesc('date_iso')
                 ->get()
             : collect();
 

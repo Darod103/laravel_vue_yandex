@@ -13,21 +13,20 @@ const emit = defineEmits(['toggle'])
 </script>
 
 <template>
-    <aside class="sidebar flex flex-col gap-6 pt-2 p-5 sticky top-0 h-screen self-start ">
-        <button class="flex items-center  -ml-2" @click="emit('toggle')">
+    <aside class="sidebar flex flex-col gap-4 sm:gap-6 pt-3 pb-6 px-4 sm:px-5 sticky top-0 h-full sm:h-screen self-start">
+        <button class="flex items-center -ml-1 sm:-ml-2 w-10 sm:w-auto" @click="emit('toggle')">
             <img :src="vector" alt="menu" class="cursor-pointer">
         </button>
-        <div class="ml-2">
-            <Link :href="route('home')"><img :src="logo" alt="Logo" class="w-40"></Link>
+        <div class="ml-1 sm:ml-2">
+            <Link :href="route('home')"><img :src="logo" alt="Logo" class="w-32 sm:w-40"></Link>
         </div>
-        <h1 class="sidebar-company__name font-main text-base font-bold ">{{ page.props.auth.user.name }}</h1>
+        <h1 class="sidebar-company__name font-main text-sm sm:text-base font-bold break-words">{{ page.props.auth.user.name }}</h1>
         <div class="w-full">
-
-            <button @click="open = !open" class="flex w-full  py-2 px-3 rounded-lg bg-white shadow-sm cursor-pointer hover:bg-gray-50">
+            <button @click="open = !open" class="flex w-full py-2 px-3 rounded-lg bg-white shadow-sm cursor-pointer hover:bg-gray-50">
                 <img :src="tools" alt="menu" class="mr-2"> <span
-                class="font-main sidebar-button__text text-base font-medium">Отзывы</span>
+                class="font-main sidebar-button__text text-sm sm:text-base font-medium">Отзывы</span>
             </button>
-            <ul v-if="open" class="ml-4 m-3 space-y-2 text-sm text-slate-700">
+            <ul v-if="open" class="ml-3 sm:ml-4 m-3 space-y-2 text-sm text-slate-700">
                 <li
                     :class="[
                         'px-3 py-2 rounded-lg transition',
