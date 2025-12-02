@@ -1,4 +1,5 @@
 <script setup>
+import bg from "@/assets/bg.mp4"
 </script>
 
 <template>
@@ -11,7 +12,7 @@
             playsinline
             muted
         >
-            <source :src="'/videos/bg.mp4'" type="video/mp4">
+            <source :src="bg" type="video/mp4">
 
         </video>
 
