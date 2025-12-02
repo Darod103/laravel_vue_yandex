@@ -13,8 +13,10 @@ return new class extends Migration
     {
         Schema::create('places', function (Blueprint $table) {
             $table->id();
+            $table->foreignId('user_id')->constrained('users')
+            ->onDelete('cascade')->unique();
             $table->string('name')->nullable();
-            $table->string('url');
+            $table->text('url');
             $table->decimal('rating', 2, 1)->nullable();
             $table->integer('total_reviews')->nullable();
             $table->enum('status', ['pending','processing', 'done','error'])->default('pending');

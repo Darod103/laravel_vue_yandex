@@ -2,6 +2,7 @@
 
 namespace App\Jobs;
 
+use App\DTO\ParsePlaceDto;
 use App\Enum\PlaceStatus;
 use App\Models\Place;
 use App\Models\Review;
@@ -25,10 +26,10 @@ class ParsePlaceJob implements ShouldQueue
     /**
      * Create a new job instance.
      */
-    public function __construct(int $userId, string $url)
+    public function __construct(ParsePlaceDto $parsePlaceDto)
     {
-        $this->userId = $userId;
-        $this->url = $url;
+        $this->userId = $parsePlaceDto->userId;
+        $this->url = $parsePlaceDto->url;
     }
 
     /**
@@ -37,8 +38,22 @@ class ParsePlaceJob implements ShouldQueue
     public function handle(): void
     {
         $user = User::findOrFail($this->userId);
-        $place = Place::where('url', $this->url)->firstOrFail();
-        $place->update(['status' => PlaceStatus::Processing]);
+
+
+        $place = $user->place ?: new Place(['user_id' => $user->id]);
+
+
+        if ($place->exists && ($place->url !== $this->url || $place->name !== ($data['org_name'] ?? null))) {
+            $place->reviews()->delete();
+        }
+
+
+        $place->fill([
+            'user_id' => $user->id,
+            'url' => $this->url,
+            'status' => PlaceStatus::Processing,
+        ]);
+        $place->save();
 
         $res = Http::timeout(60)->retry(2)
             ->post(config('services.parser.base_url') . config('services.parser.endpoint'),
@@ -60,14 +75,14 @@ class ParsePlaceJob implements ShouldQueue
         $placeUrl = $data['url'] ?? $this->url;
 
         $place->update([
+            'user_id' => $user->id,
             'url' => $placeUrl,
             'name' => $placeName,
             'rating' => $rating,
             'total_reviews' => $totalReviews,
             'parsed_at' => now(),
             'status' => PlaceStatus::Done
-            ]);
-        $user->places()->syncWithoutDetaching([$place->id]);
+        ]);
 
         foreach ($data['reviews'] as $review) {
             Review::updateOrCreate(

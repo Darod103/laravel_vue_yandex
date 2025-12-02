@@ -37,8 +37,16 @@ class HandleInertiaRequests extends Middleware
     {
         return [
             ...parent::share($request),
+            'flash' => [
+                'success' => fn () => $request->session()->get('success'),
+                'error'   => fn () => $request->session()->get('error'),
+                'status'  => fn () => $request->session()->get('status'),
+            ],
             'auth.user' => fn () => $request->user()
                 ? $request->user()->only('id', 'name', 'email')
+                : null,
+            'auth.place' => fn () => $request->user()?->place
+                ? $request->user()->place->only('id', 'url', 'status')
                 : null,
             'throttle' => fn () => [
                 'seconds' => session('throttle_seconds'), // null если нет лимита

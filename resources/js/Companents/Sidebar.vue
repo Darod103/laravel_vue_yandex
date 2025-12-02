@@ -3,12 +3,12 @@ import logo from '@/assets/logo.svg'
 import vector from '@/assets/vector.svg'
 import tools from '@/assets/tools.svg'
 import {Link, usePage} from "@inertiajs/vue3";
-import {ref} from "vue";
+import {computed, ref} from "vue";
 import {route} from "ziggy-js";
 
 const open = ref(false)
 const page = usePage()
-
+const hasPlace = computed(() => !!page.props.auth?.place?.id)
 const emit = defineEmits(['toggle'])
 </script>
 
@@ -18,7 +18,7 @@ const emit = defineEmits(['toggle'])
             <img :src="vector" alt="menu" class="cursor-pointer">
         </button>
         <div class="ml-2">
-            <img :src="logo" alt="Logo" class="w-40">
+            <Link :href="route('home')"><img :src="logo" alt="Logo" class="w-40"></Link>
         </div>
         <h1 class="sidebar-company__name font-main text-base font-bold ">{{ page.props.auth.user.name }}</h1>
         <div class="w-full">
@@ -28,8 +28,14 @@ const emit = defineEmits(['toggle'])
                 class="font-main sidebar-button__text text-base font-medium">Отзывы</span>
             </button>
             <ul v-if="open" class="ml-4 m-3 space-y-2 text-sm text-slate-700">
-                <li class="px-3 py-2 rounded-lg cursor-pointer hover:bg-white transition"
-                >Отзывы
+                <li
+                    :class="[
+                        'px-3 py-2 rounded-lg transition',
+                        hasPlace ? 'cursor-pointer hover:bg-white' : 'opacity-50 cursor-not-allowed'
+                    ]"
+                >
+                    <Link v-if="hasPlace" :href="route('reviews.index')" class="block w-full h-full">Отзывы</Link>
+                    <span v-else class="block w-full h-full">Отзывы</span>
                 </li>
                 <li class="px-3 py-2 rounded-lg cursor-pointer hover:bg-white transition">
                     <Link :href="route('reviews.settings')" class="block w-full h-full">Настройка</Link>

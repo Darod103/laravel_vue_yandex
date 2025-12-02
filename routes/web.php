@@ -21,4 +21,6 @@ Route::middleware('auth')->group(function () {
     Route::post('/logout', LogoutController::class)->name('logout');
     Route::get('/reviews/settings',[ReviewsController::class,'settings'])->name('reviews.settings');
     Route::post('/reviews',[ReviewsController::class,'store'])->name('reviews.store');
+    Route::get('/reviews/status',[ReviewsController::class,'getStatus'])->name('reviews.status');
+    Route::get('/reviews',[ReviewsController::class,'index'])->name('reviews.index');
 });
