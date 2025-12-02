@@ -8,7 +8,6 @@ use App\Jobs\ParsePlaceJob;
 use App\Models\Place;
 use App\Models\User;
 
-
 class ReviewsService
 {
     public static function parse(ParsePlaceDto $dto)
@@ -16,8 +15,8 @@ class ReviewsService
 
         $place = Place::firstOrNew(['user_id' => $dto->userId]);
         $place->fill([
-            'url' => $dto->url,
-            'status' => PlaceStatus::Pending
+            'url'    => $dto->url,
+            'status' => PlaceStatus::Pending,
         ]);
         $place->save();
 
@@ -28,6 +27,7 @@ class ReviewsService
 
     public static function getUserPlaceWithReviews(User $user): array
     {
+        /** @var Place|null $place */
         $place = $user->place()
             ->with('reviews')
             ->first();
@@ -45,7 +45,7 @@ class ReviewsService
             : collect();
 
         return [
-            'place' => $normalizedPlace,
+            'place'   => $normalizedPlace,
             'reviews' => $reviews,
         ];
     }

@@ -9,18 +9,18 @@ use App\Http\Controllers\Reviews\ReviewsController;
 use Illuminate\Support\Facades\Route;
 
 Route::middleware('guest')->group(function () {
-    Route::get('/login', fn()=> Inertia('Auth/Login') )->name('login');
+    Route::get('/login', fn () => Inertia('Auth/Login'))->name('login');
     Route::post('/login', LoginController::class)->middleware('throttle:login')->name('login.store');
-    Route::get('/register',[RegistrationController::class,'show'] )->name('register.show');
-    Route::post('/register',[RegistrationController::class,'store'] )->middleware('throttle:register')->name('register.store');
+    Route::get('/register', [RegistrationController::class,'show'])->name('register.show');
+    Route::post('/register', [RegistrationController::class,'store'])->middleware('throttle:register')->name('register.store');
 });
 
 Route::middleware('auth')->group(function () {
-    Route::get('/', fn()=> Inertia('Dashboard/Index') )->name('home');
-    Route::resource('/dashboard',DashboardController::class);
+    Route::get('/', fn () => Inertia('Dashboard/Index'))->name('home');
+    Route::resource('/dashboard', DashboardController::class);
     Route::post('/logout', LogoutController::class)->name('logout');
-    Route::get('/reviews/settings',[ReviewsController::class,'settings'])->name('reviews.settings');
-    Route::post('/reviews',[ReviewsController::class,'store'])->name('reviews.store');
-    Route::get('/reviews/status',[ReviewsController::class,'getStatus'])->name('reviews.status');
-    Route::get('/reviews',[ReviewsController::class,'index'])->name('reviews.index');
+    Route::get('/reviews/settings', [ReviewsController::class,'settings'])->name('reviews.settings');
+    Route::post('/reviews', [ReviewsController::class,'store'])->name('reviews.store');
+    Route::get('/reviews/status', [ReviewsController::class,'getStatus'])->name('reviews.status');
+    Route::get('/reviews', [ReviewsController::class,'index'])->name('reviews.index');
 });

@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 
 namespace App\Http\Requests\Auth;
@@ -26,7 +27,7 @@ class LoginRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'email' => 'required|string|email|max:255',
+            'email'    => 'required|string|email|max:255',
             'password' => 'required|string|min:6',
         ];
     }
@@ -34,11 +35,11 @@ class LoginRequest extends FormRequest
     public function messages(): array
     {
         return [
-            'email.required' => 'Укажите email',
-            'email.email' => 'неверный формат email',
+            'email.required'    => 'Укажите email',
+            'email.email'       => 'неверный формат email',
             'password.required' => 'Ввудите пороль',
-            'password.min' => 'Слишком короткий пороль',
-            'email.exists' => 'Пользователь с таким email не найден.',
+            'password.min'      => 'Слишком короткий пороль',
+            'email.exists'      => 'Пользователь с таким email не найден.',
         ];
     }
 

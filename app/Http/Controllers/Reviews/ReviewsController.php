@@ -17,7 +17,7 @@ class ReviewsController extends Controller
         ['place' => $place, 'reviews' => $reviews] = ReviewsService::getUserPlaceWithReviews($user);
 
         return Inertia::render('Reviews/Index', [
-            'place' => $place,
+            'place'   => $place,
             'reviews' => $reviews,
         ]);
     }
@@ -26,7 +26,7 @@ class ReviewsController extends Controller
     {
         $place = $request->user()?->place?->only('id', 'status', 'url');
 
-        return inertia("Reviews/ReviewsSettings", [
+        return inertia('Reviews/ReviewsSettings', [
             'place' => $place,
         ]);
     }
@@ -41,6 +41,7 @@ class ReviewsController extends Controller
 
     public function getStatus(Request $request)
     {
+        /** @var \App\Models\Place|null $place */
         $place = $request->user()?->place;
 
         return response()->json([

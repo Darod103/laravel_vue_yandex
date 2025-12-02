@@ -5,7 +5,6 @@ namespace App\Models;
 use App\Enum\PlaceStatus;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
-use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 
 class Place extends Model
@@ -21,9 +20,9 @@ class Place extends Model
     ];
 
     protected $casts = [
-        'rating' => 'decimal:1',
+        'rating'    => 'decimal:1',
         'parsed_at' => 'datetime',
-        'status' => PlaceStatus::class,
+        'status'    => PlaceStatus::class,
     ];
 
     public function user(): BelongsTo

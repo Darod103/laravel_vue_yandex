@@ -27,7 +27,7 @@ class AppServiceProvider extends ServiceProvider
 
             return Limit::perMinute(5)
                 ->by($key)
-                ->response(function () use ($request, $key) {
+                ->response(function () use ($key) {
 
                     $seconds = RateLimiter::availableIn(md5('login'.$key));
 
@@ -45,7 +45,7 @@ class AppServiceProvider extends ServiceProvider
 
             return Limit::perMinute(5)
                 ->by($key)
-                ->response(function () use ($request, $key) {
+                ->response(function () use ($key) {
 
                     $seconds = RateLimiter::availableIn(md5('register'.$key));
 

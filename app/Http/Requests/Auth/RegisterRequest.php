@@ -22,9 +22,9 @@ class RegisterRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'email' => 'required|string|email|max:255|unique:users',
+            'email'    => 'required|string|email|max:255|unique:users',
             'password' => 'required|string|min:6|confirmed',
-            'name' => 'required|string|max:255',
+            'name'     => 'required|string|max:255',
         ];
     }
 
@@ -32,16 +32,16 @@ class RegisterRequest extends FormRequest
     {
         return [
             'email.required' => 'Email обязателен для заполнения.',
-            'email.email' => 'Введите корректный адрес электронной почты.',
-            'email.max' => 'Email не должен превышать 255 символов.',
-            'email.unique' => 'Пользователь с таким email уже зарегистрирован.',
+            'email.email'    => 'Введите корректный адрес электронной почты.',
+            'email.max'      => 'Email не должен превышать 255 символов.',
+            'email.unique'   => 'Пользователь с таким email уже зарегистрирован.',
 
-            'password.required' => 'Пароль обязателен для заполнения.',
-            'password.min' => 'Пароль должен содержать не менее 6 символов.',
+            'password.required'  => 'Пароль обязателен для заполнения.',
+            'password.min'       => 'Пароль должен содержать не менее 6 символов.',
             'password.confirmed' => 'Пароли не совпадают.',
 
             'name.required' => 'Имя обязательно для заполнения.',
-            'name.max' => 'Имя не должно превышать 255 символов.',
+            'name.max'      => 'Имя не должно превышать 255 символов.',
         ];
     }
 }
